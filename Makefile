@@ -1,20 +1,20 @@
 
-all: a.out a2.out a3.out
+all: sudoku
 
-a.out: a.o
-	$(CC) -o $@ $<  -lstdc++
+sudoku: sudoku.o
+	$(CC) -o $@ $<  -lstdc++ -lm
 
-a.o: a.cc
-	$(CC) -o $@ -c $<
+sudoku.o: sudoku.cc
+	$(CC) -Wall -std=c++11 -o $@ -c $<
 
-a2.out: a2.o
-	$(CC) -o $@ $<  -lstdc++
+.PHONY: test
+test: sudoku
+	@for f in *.in; do \
+		echo '### ' $$f ' ###'; \
+		time ./sudoku < $$f; \
+		echo; \
+	done
 
-a2.o: a2.cc
-	$(CC) -o $@ -c $<
+clean:
+	rm -f *.o sudoku
 
-a3.out: a3.o
-	$(CC) -o $@ $<  -lstdc++
-
-a3.o: a3.cc
-	$(CC) -o $@ -c $<
